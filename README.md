@@ -4,8 +4,8 @@ Este repositorio contiene el sistema SysGebib, una plataforma desarrollada para 
 🟢 Esta es la **versión comentada del sistema**, recomendada para revisión del código y análisis educativo.
 
 📂 Archivos principales:
-- [`/version_comentada/`](./version-comentada) → **Versión comentada del sistema**
-- [`/main/`](./main) → Versión funcional final
+- [`/sysgebib-codificacion/`](./version-comentada) → **Versión comentada del sistema**
+- [`/sysgebib-codificacion/`](./main) → Versión funcional final
 
 📄 Documentación adicional:
 - Manual de instalación y usuario (en carpeta `/Documentación`)
