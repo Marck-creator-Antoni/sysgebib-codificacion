@@ -1,4 +1,6 @@
 <?php include "Views/Templates/header.php"; ?>
+// Versión actualizada con filtrado por fechas
+
 
 <!-- Contenedor superior con título y botón "Nuevo" -->
 <div class="row">
