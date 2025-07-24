@@ -8,18 +8,6 @@ class PrestamosModel extends Query
         parent::__construct();
     }
 
-    // Método para obtener todos los préstamos con datos de estudiantes y libros
-    public function getPrestamos()
-    {
-        // Consulta que une las tablas estudiante, libro y préstamo
-        $sql = "SELECT e.id, e.nombre, l.id, l.titulo, p.id, p.id_estudiante, p.id_libro, p.fecha_prestamo, p.fecha_devolucion, p.cantidad, p.observacion, p.estado 
-                FROM estudiante e 
-                INNER JOIN libro l 
-                INNER JOIN prestamo p ON p.id_estudiante = e.id 
-                WHERE p.id_libro = l.id";
-        $res = $this->selectAll($sql); // Ejecuta la consulta
-        return $res; // Retorna el resultado
-    }
 
     // Método para insertar un nuevo préstamo
     public function insertarPrestamo($estudiante, $libro, $cantidad, string $fecha_prestamo, string $fecha_devolucion, string $observacion)
@@ -117,14 +105,18 @@ class PrestamosModel extends Query
     }
 
     // Método para obtener un préstamo específico por su ID (para mostrar detalle)
-    public function getPrestamoLibro($id_prestamo)
-    {
-        $sql = "SELECT e.id, e.codigo, e.nombre, e.carrera, l.id, l.titulo, p.id, p.id_estudiante, p.id_libro, p.fecha_prestamo, p.fecha_devolucion, p.cantidad, p.observacion, p.estado 
-                FROM estudiante e 
-                INNER JOIN libro l 
-                INNER JOIN prestamo p ON p.id_estudiante = e.id 
-                WHERE p.id_libro = l.id AND p.id = $id_prestamo"; // Consulta específica
-        $res = $this->select($sql); // Ejecuta la consulta
-        return $res; // Retorna el préstamo
+    public function getPrestamos($fechaInicio = null, $fechaFin = null)
+{
+    $sql = "SELECT e.nombre, l.titulo, p.* 
+            FROM estudiante e 
+            INNER JOIN prestamo p ON p.id_estudiante = e.id 
+            INNER JOIN libro l ON p.id_libro = l.id";
+
+    if ($fechaInicio && $fechaFin) {
+        $sql .= " WHERE p.fecha_prestamo BETWEEN '$fechaInicio' AND '$fechaFin'";
     }
+
+    return $this->selectAll($sql);
+}
+
 }

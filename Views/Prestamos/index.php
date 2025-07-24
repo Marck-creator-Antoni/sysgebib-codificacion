@@ -3,27 +3,54 @@
 <!-- Encabezado y botón para registrar nuevo préstamo -->
 <div class="row">
     <div class="col-md-12">
-        <div class="tile" style="border-radius: 5px;padding: 10px;">
+        <div class="tile" style="border-radius: 5px; padding: 10px;">
             <div class="tile-body">
-                <div class="row invoice-info d-flex">
-                    <!-- Contenedor opcional para botones -->
-                    <div class="col-8 text-left input-group" id="botonesContainer">
+                <div class="row align-items-center flex-wrap">
+
+                    <!-- Botones de exportación -->
+                    <div class="col-12 col-md-4 d-flex flex-wrap justify-content-start mb-2" id="botonesContainer">
+                        <!-- DataTables inyectará aquí -->
                     </div>
 
-                    <!-- Título y botón para abrir formulario de préstamo -->
-                    <div class="col-4 text-right d-flex">
-                        <h5 class="title_max-width992 ">
+                    <!-- Filtros de fecha -->
+                    <div class="col-12 col-md-4 d-flex flex-wrap justify-content-center mb-2">
+                        <div class="form-group mb-0 mr-2">
+                            <label for="fechaInicio" class="mb-0 small">Desde:</label>
+                            <input type="date" id="fechaInicio" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group mb-0 mr-2">
+                            <label for="fechaFin" class="mb-0 small">Hasta:</label>
+                            <input type="date" id="fechaFin" class="form-control form-control-sm">
+                        </div>
+                        <div class="form-group mb-0 mr-2 d-flex align-items-end">
+                            <button id="btnFiltrarFechas" class="btn btn-sm btn-primary" title="Filtrar">
+                                <i class="fa fa-filter"></i>
+                            </button>
+                        </div>
+                        <div class="form-group mb-0 d-flex align-items-end">
+                            <button id="btnLimpiarFechas" class="btn btn-sm btn-secondary" title="Limpiar filtro">
+                                <i class="fa fa-refresh"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Título y botón "Nuevo" -->
+                    <div class="col-12 col-md-4 d-flex justify-content-end align-items-center mb-2">
+                        <h5 class="mb-0 mr-2">
                             <i class="fa fa-list"></i>&nbsp;Lista de Préstamos/
                         </h5>
-                        <button class="btn btn-primary btn-sm ml-auto" onclick="frmPrestar()">
-                            <i class="fa fa-plus-circle" aria-hidden="true" style="color: white;"></i>&nbsp;Nuevo
+                        <button class="btn btn-primary btn-sm" onclick="frmPrestar()">
+                            <i class="fa fa-plus-circle" style="color: white;"></i>&nbsp;Nuevo
                         </button>
                     </div>
+
                 </div>
             </div>
         </div>
     </div>
 </div>
+
+
 
 <!-- Tabla con la lista de préstamos existentes -->
 <div class="row">

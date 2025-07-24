@@ -35,26 +35,30 @@ class Prestamos extends Controller
      */
     public function listar()
     {
-        $data = $this->model->getPrestamos(); // Obtiene todos los préstamos desde el modelo
-        for ($i = 0; $i < count($data); $i++) {
-            if ($data[$i]['estado'] == 1) {
-                // Si el estado es "1", el libro está prestado
-                $data[$i]['estado'] = '<span class="badge badge-secondary">Prestado</span>';
-                $data[$i]['acciones'] = '<div>
-                    <button class="btn btn-primary btn-sm" type="button" onclick="btnEntregar(' . $data[$i]['id'] . ');"><i class="fa fa-hourglass-start"></i></button>
-                    <a class="btn btn-secondary btn-sm" target="_blank" href="' . base_url . 'Prestamos/ticked/' . $data[$i]['id'] . '"><i class="fa fa-file-pdf-o"></i></a>
-                <div/>';
-            } else {
-                // Si el estado es diferente, el libro ya fue devuelto
-                $data[$i]['estado'] = '<span class="badge badge-primary">Devuelto</span>';
-                $data[$i]['acciones'] = '<div>
-                    <a class="btn btn-secondary btn-sm" target="_blank" href="' . base_url . 'Prestamos/ticked/' . $data[$i]['id'] . '"><i class="fa fa-print"></i></a>
-                <div/>';
-            }
+    $fechaInicio = isset($_GET['fechaInicio']) ? $_GET['fechaInicio'] : null;
+    $fechaFin = isset($_GET['fechaFin']) ? $_GET['fechaFin'] : null;
+
+    $data = $this->model->getPrestamos($fechaInicio, $fechaFin); // Ahora pasas fechas al modelo
+
+    for ($i = 0; $i < count($data); $i++) {
+        if ($data[$i]['estado'] == 1) {
+            $data[$i]['estado'] = '<span class="badge badge-secondary">Prestado</span>';
+            $data[$i]['acciones'] = '<div>
+                <button class="btn btn-primary btn-sm" type="button" onclick="btnEntregar(' . $data[$i]['id'] . ');"><i class="fa fa-hourglass-start"></i></button>
+                <a class="btn btn-secondary btn-sm" target="_blank" href="' . base_url . 'Prestamos/ticked/' . $data[$i]['id'] . '"><i class="fa fa-file-pdf-o"></i></a>
+            </div>';
+        } else {
+            $data[$i]['estado'] = '<span class="badge badge-primary">Devuelto</span>';
+            $data[$i]['acciones'] = '<div>
+                <a class="btn btn-secondary btn-sm" target="_blank" href="' . base_url . 'Prestamos/ticked/' . $data[$i]['id'] . '"><i class="fa fa-print"></i></a>
+            </div>';
         }
-        echo json_encode($data, JSON_UNESCAPED_UNICODE); // Retorna los datos en formato JSON
-        die(); // Finaliza la ejecución
     }
+
+    echo json_encode($data, JSON_UNESCAPED_UNICODE);
+    die();
+    }
+
 
     /**
      * Registra un nuevo préstamo de libro

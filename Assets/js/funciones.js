@@ -252,10 +252,14 @@ document.addEventListener("DOMContentLoaded", function(){
         ]
     });
     //fin Libros
-    tblPrestar = $('#tblPrestar').DataTable({
+        tblPrestar = $('#tblPrestar').DataTable({
         ajax: {
             url: base_url + "Prestamos/listar",
-            dataSrc: ''
+            dataSrc: '',
+            data: function (d) {
+                d.fechaInicio = $('#fechaInicio').val();
+                d.fechaFin = $('#fechaFin').val();
+            }
         },
         columns: [{
                 'data': 'id'
@@ -296,6 +300,14 @@ document.addEventListener("DOMContentLoaded", function(){
         ]
        
     });
+    $('#btnFiltrarFechas').on('click', function () {
+    if (!$('#fechaInicio').val() || !$('#fechaFin').val()) {
+        alert('Por favor selecciona ambas fechas');
+        return;
+    }
+    tblPrestar.ajax.reload();
+});
+
 
 /////////////////////////////////////////////
 // Colocar los botones en el contenedor con el ID "botonesContainer"
